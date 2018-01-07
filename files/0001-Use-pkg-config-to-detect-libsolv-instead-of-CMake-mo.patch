@@ -1,0 +1,30 @@
+From 63dd68b121862d28642ace9b2c6bf0e4ace8adac Mon Sep 17 00:00:00 2001
+From: Neal Gompa <ngompa13@gmail.com>
+Date: Tue, 2 Jan 2018 18:45:30 -0500
+Subject: [PATCH] Use pkg-config to detect libsolv instead of CMake modules
+
+There appears to be issues with detecting the libsolv module with CMake
+on Solus.
+
+---
+ CMakeLists.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 4be0c14..fb08e7a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -36,7 +36,9 @@ find_package (PkgConfig REQUIRED)
+ SET (CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
+ PKG_CHECK_MODULES(GLIB gio-unix-2.0>=2.46.0 REQUIRED)
+ FIND_LIBRARY (RPMDB_LIBRARY NAMES rpmdb)
+-find_package (LibSolv 0.6.21 REQUIRED COMPONENTS ext)
++PKG_CHECK_MODULES (LIBSOLV libsolv>=0.6.21 REQUIRED)
++PKG_CHECK_MODULES (LIBSOLVEXT libsolvext>=0.6.21 REQUIRED)
++SET (LIBSOLV_LIBRARY ${LIBSOLV_LIBRARIES} ${LIBSOLVEXT_LIBRARIES})
+ if (ENABLE_RHSM_SUPPORT)
+     pkg_check_modules (RHSM REQUIRED librhsm)
+     include_directories (${RHSM_INCLUDE_DIRS})
+-- 
+2.15.1
+

@@ -1,0 +1,26 @@
+name       : libdnf
+version    : 0.11.1
+release    : 1
+source     :
+    - https://github.com/rpm-software-management/libdnf/archive/0.11.1/libdnf-0.11.1.tar.gz : 068ebf9a3a66968aa3564c5e2fce6616d398bf630a7c81300b9730374567a79e
+license    : LGPL-2.1+
+component  : programming.library
+summary    : Library providing simplified C and Python API to libsolv
+description: |
+    This library provides a high level interface for an RPM package manager.
+
+    It is used as the backend for the DNF package manager as well as RPM-OSTree.
+builddeps  :
+    - pkgconfig(check)
+    - pkgconfig(libsolv)
+    - pkgconfig(librepo)
+    - pkgconfig(rpm)
+    - pkgconfig(popt)
+    - pkgconfig(python3)
+setup      : |
+    %apply_patches
+    %cmake -DPYTHON_DESIRED:str=3 -DWITH_MAN=0 -DWITH_GTKDOC=0
+build      : |
+    %make
+install    : |
+    %make_install

@@ -1,0 +1,61 @@
+<PISI>
+    <Source>
+        <Name>libdnf</Name>
+        <Packager>
+            <Name>Neal Gompa</Name>
+            <Email>ngompa13@gmail.com</Email>
+        </Packager>
+        <License>LGPL-2.1+</License>
+        <PartOf>programming.library</PartOf>
+        <Summary xml:lang="en">Library providing simplified C and Python API to libsolv</Summary>
+        <Description xml:lang="en">This library provides a high level interface for an RPM package manager.
+
+It is used as the backend for the DNF package manager as well as RPM-OSTree.
+</Description>
+        <Archive type="binary" sha1sum="79eb0752a961b8e0d15c77d298c97498fbc89c5a">https://solus-project.com/sources/README.Solus</Archive>
+    </Source>
+    <Package>
+        <Name>libdnf</Name>
+        <Summary xml:lang="en">Library providing simplified C and Python API to libsolv</Summary>
+        <Description xml:lang="en">This library provides a high level interface for an RPM package manager.
+
+It is used as the backend for the DNF package manager as well as RPM-OSTree.
+</Description>
+        <PartOf>programming.library</PartOf>
+        <Files>
+            <Path fileType="library">/usr/lib/python3.5/site-packages/hawkey/__init__.py</Path>
+            <Path fileType="library">/usr/lib/python3.5/site-packages/hawkey/_hawkey.so</Path>
+            <Path fileType="library">/usr/lib/python3.5/site-packages/hawkey/test/__init__.py</Path>
+            <Path fileType="library">/usr/lib/python3.5/site-packages/hawkey/test/_hawkey_test.so</Path>
+            <Path fileType="library">/usr/lib64/girepository-1.0/Dnf-1.0.typelib</Path>
+            <Path fileType="library">/usr/lib64/lib*.so.*</Path>
+            <Path fileType="data">/usr/share/gir-1.0/Dnf-1.0.gir</Path>
+        </Files>
+    </Package>
+    <Package>
+        <Name>libdnf-devel</Name>
+        <Summary xml:lang="en">Development files for libdnf</Summary>
+        <Description xml:lang="en">This library provides a high level interface for an RPM package manager.
+
+It is used as the backend for the DNF package manager as well as RPM-OSTree.
+</Description>
+        <PartOf>programming.devel</PartOf>
+        <RuntimeDependencies>
+            <Dependency release="1">libdnf</Dependency>
+        </RuntimeDependencies>
+        <Files>
+            <Path fileType="header">/usr/include/</Path>
+            <Path fileType="library">/usr/lib64/lib*.so</Path>
+            <Path fileType="data">/usr/lib64/pkgconfig/*.pc</Path>
+        </Files>
+    </Package>
+    <History>
+        <Update release="1">
+            <Date>2018-01-07</Date>
+            <Version>0.11.1</Version>
+            <Comment>Packaging update</Comment>
+            <Name>Neal Gompa</Name>
+            <Email>ngompa13@gmail.com</Email>
+        </Update>
+    </History>
+</PISI>

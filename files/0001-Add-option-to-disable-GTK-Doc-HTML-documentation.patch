@@ -1,0 +1,51 @@
+From c55faaa96d639f2c234c3da8bfad7c569b2d4a0f Mon Sep 17 00:00:00 2001
+From: Neal Gompa <ngompa13@gmail.com>
+Date: Sat, 6 Jan 2018 20:40:26 -0500
+Subject: [PATCH] Add option to disable GTK-Doc HTML documentation
+
+The documentation is pretty useless right now, and even if it wasn't,
+there's nothing that indicates that documentation must be generated
+for the library to function.
+---
+ docs/libdnf/CMakeLists.txt | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/docs/libdnf/CMakeLists.txt b/docs/libdnf/CMakeLists.txt
+index 42f2ac3..07e291b 100644
+--- a/docs/libdnf/CMakeLists.txt
++++ b/docs/libdnf/CMakeLists.txt
+@@ -1,8 +1,11 @@
+-find_package(GtkDoc REQUIRED)
+-
+ configure_file("version.xml.in"  ${CMAKE_CURRENT_SOURCE_DIR}/version.xml)
+ 
+-if (GTKDOC_FOUND)
++OPTION(WITH_GTKDOC "Enables libdnf GTK-Doc HTML documentation" ON)
++
++if (WITH_GTKDOC)
++    find_package(GtkDoc REQUIRED)
++
++    if (GTKDOC_FOUND)
+         add_custom_command(OUTPUT doc-scan
+             COMMAND ${GTKDOC_SCAN_EXE}
+                     --source-dir=${CMAKE_SOURCE_DIR}/libdnf
+@@ -22,9 +25,10 @@ if (GTKDOC_FOUND)
+                     libdnf
+                     ${CMAKE_SOURCE_DIR}/docs/libdnf/libdnf-docs.sgml
+             WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/html")
+-    add_custom_target(doc-gtk DEPENDS doc-scan doc-mkdb doc-mkhtml)
+-else ()
+-    message (FATAL_ERROR "gtk-doc not found")
+-endif ()
++        add_custom_target(doc-gtk DEPENDS doc-scan doc-mkdb doc-mkhtml)
++    else ()
++        message (FATAL_ERROR "gtk-doc not found")
++    endif ()
+ 
+-INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/html DESTINATION share/gtk-doc/html/libdnf)
+\ No newline at end of file
++    INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/html DESTINATION share/gtk-doc/html/libdnf)
++endif ()
+-- 
+2.15.1
+
